@@ -1,4 +1,4 @@
---Readme document for *YOUR NAME*, *YOUR_EMAIL@uci.edu*--
+--Readme document for *Ivan Quon*, *iquon@uci.edu*--
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
