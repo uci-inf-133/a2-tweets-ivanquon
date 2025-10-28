@@ -9,15 +9,11 @@ class Tweet {
 
   //returns either 'live_event', 'achievement', 'completed_event', or 'miscellaneous'
   get source(): string {
-    //TODO: identify whether the source is a live event, an achievement, a completed event, or miscellaneous.
     if (this.text.includes("#RKLive")) {
       return "live_event";
     } else if (this.text.includes("#FitnessAlerts")) {
       return "achievement";
-    } else if (
-      this.text.includes("Just completed") ||
-      this.text.includes("Just posted")
-    ) {
+    } else if (this.text.includes("Just completed") || this.text.includes("Just posted")) {
       return "completed_event";
     } else {
       return "miscellaneous";
@@ -26,7 +22,6 @@ class Tweet {
 
   //returns a boolean, whether the text includes any content written by the person tweeting.
   get written(): boolean {
-    //TODO: identify whether the tweet is written
     return this.text.indexOf(" - ") !== -1;
   }
 
@@ -34,24 +29,53 @@ class Tweet {
     if (!this.written) {
       return "";
     }
-    //TODO: parse the written text from the tweet
-    return this.text.split("-")[1].split("http://")[0];
+    return this.text.split("-")[1].split("https://")[0];
   }
 
+  /*
+  Found Forms:
+  Just completed a {Distance} {Unit} {Activity} - ... 
+  Just completed a {Distance} {Unit} {Activity} with ...
+  Just posted a {Distance} {Unit} {Activity} ...
+  Just posted a {Activity} in {Time} ...
+  Just posted an {Activity} in {Time} ...
+
+  - " with" or " - " usually marks end of activity
+  km and mi can appear at the end of urls
+  */
   get activityType(): string {
     if (this.source != "completed_event") {
       return "unknown";
     }
-    //TODO: parse the activity type from the text of the tweet
-    return "";
+    if (this.text.split("https://")[0].search(/(?:mi|km)\b/) !== -1) {
+      //Follows a Unit Pattern
+      return this.text
+        .split(/(?:mi|km)\b/)[1]
+        .split(/(?:\bwith\b|-)/)[0]
+        .trim();
+    } else {
+      //Follows a Time Pattern
+      return this.text
+        .split(/\b(?:a|an)\b/)[1]
+        .split(/\bin\b/)[0]
+        .trim();
+    }
   }
 
   get distance(): number {
     if (this.source != "completed_event") {
       return 0;
     }
-    //TODO: prase the distance from the text of the tweet
-    return 0;
+    if (this.text.split("https://")[0].search(/(?:mi|km)\b/) !== -1) {
+      return Number(
+        this.text
+          .split(/(?:mi|km)\b/)[0]
+          .split(/\b(?:a|an)\b/)[1]
+          .trim()
+      );
+    } else {
+      return 0;
+    }
   }
 
   getHTMLTableRow(rowNumber: number): string {

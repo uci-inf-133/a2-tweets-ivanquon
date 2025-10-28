@@ -27,6 +27,7 @@ function parseTweets(runkeeper_tweets) {
     .sort((t1, t2) => t1.time - t2.time)
     .at(-1)
     .time.toLocaleDateString("en-US", options);
+
   //Counts
   document.getElementById("numberTweets").innerText = tweet_array.length;
   [...document.getElementsByClassName("completedEvents")].forEach((element) => {
