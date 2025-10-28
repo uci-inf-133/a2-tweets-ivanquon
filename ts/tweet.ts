@@ -52,13 +52,15 @@ class Tweet {
       return this.text
         .split(/(?:mi|km)\b/)[1]
         .split(/(?:\bwith\b|-)/)[0]
-        .trim();
+        .trim()
+        .toLowerCase();
     } else {
       //Follows a Time Pattern
       return this.text
         .split(/\b(?:a|an)\b/)[1]
         .split(/\bin\b/)[0]
-        .trim();
+        .trim()
+        .toLowerCase();
     }
   }
 
@@ -67,12 +69,16 @@ class Tweet {
       return 0;
     }
     if (this.text.split("https://")[0].search(/(?:mi|km)\b/) !== -1) {
-      return Number(
+      const dist = Number(
         this.text
           .split(/(?:mi|km)\b/)[0]
           .split(/\b(?:a|an)\b/)[1]
           .trim()
       );
+      if (this.text.match(/(?:mi|km)\b/)![0] === "km") {
+        return dist / 1.609;
+      }
+      return dist;
     } else {
       return 0;
     }

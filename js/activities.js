@@ -9,19 +9,58 @@ function parseTweets(runkeeper_tweets) {
     return new Tweet(tweet.text, tweet.created_at);
   });
 
-  //Count Each Activity
+  //Activity Frequency
   const counts = tweet_array.reduce((count, tweet) => {
     count[tweet.activityType] = (count[tweet.activityType] || 0) + 1;
     return count;
   }, {});
 
-  //Sort Descending and turn it into an array of arrays
+  //Sort Activity Frequency
   const sortedCounts = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+  //Distance By Activity
+  const distances = tweet_array.reduce((count, tweet) => {
+    if (tweet.distance > 0) {
+      count[tweet.activityType] = (count[tweet.activityType] || 0) + tweet.distance;
+    }
+    return count;
+  }, {});
+
+  //Sort Distance By Activity
+  const sortedDistances = Object.entries(distances).sort((a, b) => b[1] - a[1]);
+
+  console.log(sortedDistances);
+
+  console.log(
+    sortedCounts.slice(0, 3).map((count) => {
+      return count[0];
+    })
+  );
 
   document.getElementById("numberActivities").innerText = sortedCounts.length - 1; //Exclude Unknown results
   document.getElementById("firstMost").innerText = sortedCounts[0][0];
   document.getElementById("secondMost").innerText = sortedCounts[1][0];
   document.getElementById("thirdMost").innerText = sortedCounts[2][0];
+
+  //Of the three most common activities calculate the average max/min distance done per activity
+  document.getElementById("longestActivityType").innerText = sortedCounts
+    .slice(0, 3)
+    .map((count) => {
+      return count[0];
+    })
+    .reduce((prev, cur) => {
+      return distances[prev] / counts[prev] > distances[cur] / counts[cur] ? prev : cur;
+    });
+  document.getElementById("shortestActivityType").innerText = sortedCounts
+    .slice(0, 3)
+    .map((count) => {
+      return count[0];
+    })
+    .reduce((prev, cur) => {
+      return distances[prev] / counts[prev] < distances[cur] / counts[cur] ? prev : cur;
+    });
+
+  //   document.getElementById("weekdayOrWeekendLonger").innerText = sortedCounts[2][0];
 
   //TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 

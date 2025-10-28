@@ -12,11 +12,15 @@
 
 
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials; describe queries to Generative AI or use of AI-based code completion)
+Resources:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+https://stackoverflow.com/
+https://www.w3schools.com/js/
 
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
-
+No classmates or individuals consulted directly. A few questions asked and answered on Slack for clarification like timezones
 
 
 5. Is there anything special we need to know in order to run your code?
