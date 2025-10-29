@@ -8,7 +8,7 @@
 - 3/3 Adding a text earch interface
 
 2. How long, in hours, did it take you to complete this assignment?
-30ish Hours
+20-30ish Hours, my gauging of time is worse due to splitting my attentions between 3 projects and job hunting but it should be around this range.
 
 
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials; describe queries to Generative AI or use of AI-based code completion)
@@ -23,6 +23,7 @@ AI Query Descriptions:
     Regex Generation: Asked for regex adjustments or more complicated regex for finding if certain cases existed in tweet data
     Vega: Asked to find certain style options that weren't easily found in docs (Point is a mark option that isn't apparent at first, ended up finding in stack overflow)
 
+No AI Code Completion used, Did use the regular autocomplete for method/variable names though
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 No classmates or individuals consulted directly. A few questions asked and answered on Slack for clarification like timezones and case sensitivity
