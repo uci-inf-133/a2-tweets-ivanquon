@@ -25,8 +25,9 @@ AI Query Descriptions:
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
-No classmates or individuals consulted directly. A few questions asked and answered on Slack for clarification like timezones
+No classmates or individuals consulted directly. A few questions asked and answered on Slack for clarification like timezones and case sensitivity
 
 
 5. Is there anything special we need to know in order to run your code?
-
+Should work with just double clicking the .html files. Tested on Firefox
+Formatting should (hopefully) be consistent, indentation inconsistencies may have appeared due to different Prettier settings on my desktop vs laptop

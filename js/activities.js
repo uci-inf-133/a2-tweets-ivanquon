@@ -15,7 +15,7 @@ function parseTweets(runkeeper_tweets) {
     return count;
   }, {});
 
-  //Sort Activity Frequency
+  //Sorted Activity Frequency
   const sortedCounts = Object.entries(counts).sort((a, b) => b[1] - a[1]);
 
   //Distance By Activity
@@ -26,6 +26,7 @@ function parseTweets(runkeeper_tweets) {
     return count;
   }, {});
 
+  //Distance and Count By Day
   const days = tweet_array.reduce(
     (day, tweet) => {
       if (tweet.time.getDay() > 0 && tweet.time.getDay() < 6) {
@@ -40,14 +41,13 @@ function parseTweets(runkeeper_tweets) {
     { weekday: [0, 0], weekend: [0, 0] }
   );
 
-  console.log(Object.entries(counts).map((array) => ({ activity: [array[0]], count: array[1] })));
-
+  //Calculate answers and display
   document.getElementById("numberActivities").innerText = sortedCounts.length;
   document.getElementById("firstMost").innerText = sortedCounts[0][0];
   document.getElementById("secondMost").innerText = sortedCounts[1][0];
   document.getElementById("thirdMost").innerText = sortedCounts[2][0];
 
-  //Of the three most common activities calculate the average max/min distance done per activity
+  //Of the three most common activities calculate the average max/min distance done per activity and averages on weekends vs weekdays
   document.getElementById("longestActivityType").innerText = sortedCounts
     .slice(0, 3)
     .map((count) => {
@@ -68,6 +68,7 @@ function parseTweets(runkeeper_tweets) {
   document.getElementById("weekdayOrWeekendLonger").innerText =
     days["weekday"][1] / days["weekday"][0] > days["weekend"][1] / days["weekend"][0] ? "weekdays" : "weekends";
 
+  //Graphs
   activity_vis_spec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     description: "A graph of the number of Tweets containing each type of activity.",
@@ -143,6 +144,7 @@ function parseTweets(runkeeper_tweets) {
   };
   vegaEmbed("#distanceVisAggregated", distance_aggregated_vis_spec, { actions: false });
 
+  //Graph Display + Button Functionality
   document.getElementById("distanceVis").style.display = "block";
   document.getElementById("distanceVisAggregated").style.display = "none";
 

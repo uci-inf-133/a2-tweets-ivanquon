@@ -9,6 +9,7 @@ function parseTweets(runkeeper_tweets) {
     return new Tweet(tweet.text, tweet.created_at);
   });
 
+  //Filters only written tweets
   written_tweets = tweet_array.filter((tweet) => tweet.written);
 
   //Initial load or reloads
@@ -31,6 +32,7 @@ function parseTweets(runkeeper_tweets) {
 }
 
 function addEventHandlerForSearch() {
+  //Empty state if no input string, else filter tweets and add table rows
   document.getElementById("textFilter").addEventListener("input", () => {
     document.getElementById("searchText").innerText = document.getElementById("textFilter").value;
     if (!document.getElementById("textFilter").value) {
