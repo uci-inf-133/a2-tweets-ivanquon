@@ -46,6 +46,8 @@ function parseTweets(runkeeper_tweets) {
         { weekday: [0, 0], weekend: [0, 0] }
     )
 
+    console.log(Object.entries(counts).map((array) => ({ activity: [array[0]], count: array[1] })))
+
     document.getElementById("numberActivities").innerText = sortedCounts.length - 1 //Exclude Unknown results
     document.getElementById("firstMost").innerText = sortedCounts[0][0]
     document.getElementById("secondMost").innerText = sortedCounts[1][0]
@@ -80,14 +82,61 @@ function parseTweets(runkeeper_tweets) {
         $schema: "https://vega.github.io/schema/vega-lite/v5.json",
         description: "A graph of the number of Tweets containing each type of activity.",
         data: {
-            values: tweet_array,
+            values: Object.entries(counts).map((array) => ({
+                activity: [array[0]],
+                count: array[1],
+            })),
         },
-        //TODO: Add mark and encoding
+        mark: "point",
+        encoding: {
+            x: { field: "activity", sort: "-y", axis: { labelAngle: -45 } },
+            y: { field: "count", type: "quantitative" },
+        },
     }
     vegaEmbed("#activityVis", activity_vis_spec, { actions: false })
 
     //TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
     //Use those visualizations to answer the questions about which activities tended to be longest and when.
+
+    distance_vis_spec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+        description: "A graph of the number of Tweets containing each type of activity.",
+        data: {
+            values: tweet_array.reduce((arr, tweet) => {
+                if (["run", "bike", "walk"].includes(tweet.activityType)) {
+                    arr.push({
+                        day: tweet.time.getDay(),
+                        distance: tweet.distance,
+                        activity: tweet.activityType,
+                    })
+                }
+            }, []),
+        },
+        mark: "point",
+        encoding: {
+            x: { field: "day", axis: { labelAngle: 0 } },
+            y: { field: "distance", type: "quantitative" },
+            color: { field: "activity" },
+        },
+    }
+    vegaEmbed("#distanceVis", distance_vis_spec, { actions: false })
+
+    // distance_aggregated_vis_spec = {
+    //     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    //     description: "A graph of the number of Tweets containing each type of activity.",
+    //     data: {
+    //         values: Object.entries(counts).map((array) => ({
+    //             activity: [array[0]],
+    //             count: array[1],
+    //         })),
+    //     },
+    //     mark: "point",
+    //     encoding: {
+    //         x: { field: "activity", sort: "-y", axis: { labelAngle: -45 } },
+    //         y: { field: "count", type: "quantitative" },
+    //     },
+    // }
+    // vegaEmbed("#distanceVisAggregated", activity_vis_spec, { actions: false })
 }
 
 //Wait for the DOM to load
