@@ -13,7 +13,7 @@ class Tweet {
       return "live_event";
     } else if (this.text.includes("#FitnessAlerts")) {
       return "achievement";
-    } else if (this.text.includes("Just completed") || this.text.includes("Just posted")) {
+    } else if (this.text.startsWith("Just completed") || this.text.startsWith("Just posted")) {
       return "completed_event";
     } else {
       return "miscellaneous";
@@ -22,14 +22,27 @@ class Tweet {
 
   //returns a boolean, whether the text includes any content written by the person tweeting.
   get written(): boolean {
-    return this.text.indexOf(" - ") !== -1;
+    return (
+      this.text.indexOf(" - ") !== -1 ||
+      this.text.indexOf("#Runkeeper") === -1 ||
+      this.text.indexOf("https://") === -1 ||
+      this.source === "miscellaneous"
+    );
   }
 
   get writtenText(): string {
     if (!this.written) {
       return "";
     }
-    return this.text.split("-")[1].split("https://")[0];
+    const cleaned = //Written text is anything before https://, #Runkeeper is auto placed after the url so any leftover ones are user written
+      (this.text.match(/https:\/\//g)?.length || 0) > 1
+        ? this.text.slice(0, this.text.lastIndexOf("https://"))
+        : this.text.split("https://")[0];
+    if (cleaned.indexOf(" - ") !== -1) {
+      return cleaned.split("-")[1];
+    } else {
+      return cleaned;
+    }
   }
 
   /*
@@ -85,7 +98,14 @@ class Tweet {
   }
 
   getHTMLTableRow(rowNumber: number): string {
-    //TODO: return a table row which summarizes the tweet with a clickable link to the RunKeeper activity
-    return "<tr></tr>";
+    const embedded = this.text.split(/(https?:\/\/[^\s]+)/).reduce((str, section) => {
+      if (section.match(/(https?:\/\/[^\s]+)/)) {
+        str += `<a href=${section}>${section}</a>`;
+      } else {
+        str += section;
+      }
+      return str;
+    }, "");
+    return `<tr><td>${rowNumber}</td><td>${this.activityType}</td><td>${embedded}</td></tr>`;
   }
 }

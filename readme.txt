@@ -2,13 +2,13 @@
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
-*/10
-- */3 Summarizing tweets
-- */4 Identifying the most popular activities
-- */3 Adding a text earch interface
+10/10
+- 3/3 Summarizing tweets
+- 4/4 Identifying the most popular activities
+- 3/3 Adding a text earch interface
 
 2. How long, in hours, did it take you to complete this assignment?
-
+30ish Hours
 
 
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials; describe queries to Generative AI or use of AI-based code completion)
@@ -18,6 +18,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript
 https://stackoverflow.com/
 https://www.w3schools.com/js/
 https://vega.github.io/vega-lite/examples/
+
+AI Query Descriptions:
+    Regex Generation: Asked for regex adjustments or more complicated regex for finding if certain cases existed in tweet data
+    Vega: Asked to find certain style options that weren't easily found in docs (Point is a mark option that isn't apparent at first, ended up finding in stack overflow)
 
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
