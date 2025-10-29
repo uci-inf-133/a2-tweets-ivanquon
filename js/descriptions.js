@@ -12,7 +12,7 @@ function parseTweets(runkeeper_tweets) {
   written_tweets = tweet_array.filter((tweet) => tweet.written);
 
   //Initial load or reloads
-  document.getElementById("searchText").innerText = document.getElementById("textFilter").value.toLowerCase();
+  document.getElementById("searchText").innerText = document.getElementById("textFilter").value;
   if (!document.getElementById("textFilter").value) {
     document.getElementById("searchCount").innerText = 0;
     document.getElementById("tweetTable").innerHTML = "";
@@ -32,7 +32,7 @@ function parseTweets(runkeeper_tweets) {
 
 function addEventHandlerForSearch() {
   document.getElementById("textFilter").addEventListener("input", () => {
-    document.getElementById("searchText").innerText = document.getElementById("textFilter").value.toLowerCase();
+    document.getElementById("searchText").innerText = document.getElementById("textFilter").value;
     if (!document.getElementById("textFilter").value) {
       document.getElementById("searchCount").innerText = 0;
       document.getElementById("tweetTable").innerHTML = "";
