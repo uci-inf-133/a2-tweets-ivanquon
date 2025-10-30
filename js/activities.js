@@ -115,50 +115,61 @@ function parseTweets(runkeeper_tweets) {
   };
   vegaEmbed("#distanceVis", distance_vis_spec, { actions: false });
 
-  distance_aggregated_vis_spec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
-    description: "A graph of the number of Tweets containing each type of activity.",
-    data: {
-      values: tweet_array.reduce((arr, tweet) => {
-        if (["run", "bike", "walk"].includes(tweet.activityType)) {
-          arr.push({
-            day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][tweet.time.getDay()],
-            distance: tweet.distance,
-            activity: tweet.activityType,
-          });
-        }
-        return arr;
-      }, []),
-    },
-    mark: "point",
-    encoding: {
-      x: {
-        field: "day",
-        axis: { labelAngle: 0, grid: "true" },
-        type: "ordinal",
-        sort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      },
-      y: { field: "distance", type: "quantitative", aggregate: "mean" },
-      color: { field: "activity" },
-    },
-  };
-  vegaEmbed("#distanceVisAggregated", distance_aggregated_vis_spec, { actions: false });
+  // Two graph version, commented out for one graph extra credit
+  // distance_aggregated_vis_spec = {
+  //   $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  //   description: "A graph of the number of Tweets containing each type of activity.",
+  //   data: {
+  //     values: tweet_array.reduce((arr, tweet) => {
+  //       if (["run", "bike", "walk"].includes(tweet.activityType)) {
+  //         arr.push({
+  //           day: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][tweet.time.getDay()],
+  //           distance: tweet.distance,
+  //           activity: tweet.activityType,
+  //         });
+  //       }
+  //       return arr;
+  //     }, []),
+  //   },
+  //   mark: "point",
+  //   encoding: {
+  //     x: {
+  //       field: "day",
+  //       axis: { labelAngle: 0, grid: "true" },
+  //       type: "ordinal",
+  //       sort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  //     },
+  //     y: { field: "distance", type: "quantitative", aggregate: "mean" },
+  //     color: { field: "activity" },
+  //   },
+  // };
+  // vegaEmbed("#distanceVisAggregated", distance_aggregated_vis_spec, { actions: false });
 
   //Graph Display + Button Functionality
   document.getElementById("distanceVis").style.display = "block";
-  document.getElementById("distanceVisAggregated").style.display = "none";
+  // document.getElementById("distanceVisAggregated").style.display = "none";
 
   document.getElementById("aggregate").addEventListener("click", () => {
-    [
-      document.getElementById("distanceVis").style.display,
-      document.getElementById("distanceVisAggregated").style.display,
-    ] = [
-      document.getElementById("distanceVisAggregated").style.display,
-      document.getElementById("distanceVis").style.display,
-    ];
+    if (document.getElementById("aggregate").innerText === "Show means") {
+      document.getElementById("aggregate").innerText = "Show all activities";
+      distance_vis_spec.encoding.y.aggregate = "mean";
+    } else {
+      document.getElementById("aggregate").innerText = "Show means";
+      delete distance_vis_spec.encoding.y.aggregate;
+    }
+    vegaEmbed("#distanceVis", distance_vis_spec, { actions: false });
 
-    document.getElementById("aggregate").innerText =
-      document.getElementById("aggregate").innerText === "Show means" ? "Show all activities" : "Show means";
+    // Basic implementation with 2 graphs
+    // [
+    //   document.getElementById("distanceVis").style.display,
+    //   document.getElementById("distanceVisAggregated").style.display,
+    // ] = [
+    //   document.getElementById("distanceVisAggregated").style.display,
+    //   document.getElementById("distanceVis").style.display,
+    // ];
+
+    // document.getElementById("aggregate").innerText =
+    //   document.getElementById("aggregate").innerText === "Show means" ? "Show all activities" : "Show means";
   });
 }
 

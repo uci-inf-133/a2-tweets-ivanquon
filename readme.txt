@@ -7,6 +7,9 @@
 - 4/4 Identifying the most popular activities
 - 3/3 Adding a text earch interface
 
+Attempted:
+- 1/1 Extra Credit - Change one chart on button press instead of making two charts
+
 2. How long, in hours, did it take you to complete this assignment?
 20-30ish Hours, my gauging of time is worse due to splitting my attentions between 3 projects and job hunting but it should be around this range.
 
